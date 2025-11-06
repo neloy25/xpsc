@@ -4,23 +4,30 @@ using namespace std;
 void solve() {
     int n,q;
     cin >> n >> q;
+    vector<int> v (n);
+    for(auto &x : v) cin >> x;
+    map<int,pair<int,int>> mp;
 
-    map<int,set<int>> mp;
-    set<int> s;
-    vector<int> v(n);
-    for(int i = 0; i < n; i++) {
-        int val;
-        cin >> val;
-        s.insert(val);
-        mp[val] = s;
+
+    for(int i = 0; i < n;i++) {
+        if(mp.count(v[i])) {
+            mp[v[i]] = {mp[v[i]].first,i + 1};
+        } else {
+            mp[v[i]] = {i + 1,i + 1};
+        }
     }
 
-    while(q--) {
+    for(int i = 0; i < q; i++) {
         int a,b;
         cin >> a >> b;
 
-        if(mp[b].count(a)) cout << "YES\n";
-        else cout << "NO\n";
+        if(!mp.count(a) || !mp.count(b)) {
+            cout << "NO\n";
+        } else if(mp[a].first > mp[b].second) {
+            cout << "NO\n";
+        } else {
+            cout << "YES\n";
+        }
     }
 }
 
