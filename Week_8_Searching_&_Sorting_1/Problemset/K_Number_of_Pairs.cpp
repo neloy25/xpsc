@@ -6,16 +6,23 @@ using namespace std;
 #define no cout << "NO\n"
 
 void solve() {
-    int n;
-    cin >> n;
+    int n,l,r;
+    cin >> n >> l >> r;
     vector<ll> v(n);
-    int x = 0;
+    
     for(int i = 0; i < n; i++) {
         cin >> v[i];
-        x = x|v[i];
     }
 
-    cout << x << endl;
+    sort(v.begin(),v.end());
+
+    ll res = 0;
+
+    for(int i = 0; i < n - 1; i++) {
+        res+= upper_bound(v.begin() + i + 1, v.end(),r - v[i]) - lower_bound(v.begin() + i + 1, v.end(),l - v[i]);
+    }
+
+    cout << res << endl;
 }
 
 int main()
